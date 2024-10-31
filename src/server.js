@@ -6,9 +6,10 @@ const app = express();
 
 app.use(express.json());
 
-sequelize.sync()
-  .then(() => console.log('Conectado ao MySQL'))
-  .catch((err) => console.error('Erro ao conectar ao MySQL:', err));
+// Força a recriação das tabelas
+sequelize.sync({ force: true }) // Use isso apenas em desenvolvimento!
+  .then(() => console.log('Banco de dados sincronizado'))
+  .catch((err) => console.error('Erro ao sincronizar banco:', err));
 
 app.use('/api/auth', require('./routes/auth'));
 

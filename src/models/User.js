@@ -18,6 +18,14 @@ const User = sequelize.define('User', {
   dataCriacao: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
+  },
+  reset_token: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  reset_token_expires: {
+    type: DataTypes.DATE,
+    allowNull: true
   }
 });
 

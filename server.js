@@ -8,6 +8,7 @@ const sequelize = require('./src/config/database');
 const routes = require('./src/routes');
 const errorHandler = require('./src/middlewares/error.middleware');
 const logger = require('./src/config/logger');
+const AutomationService = require('./src/services/AutomationService');
 
 const app = express();
 
@@ -29,6 +30,8 @@ const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
     logger.info(`Servidor rodando na porta ${PORT}`);
+    // Iniciar monitoramento de triggers após o servidor estar rodando
+    AutomationService.startTriggerMonitoring();
   });
 });
 
@@ -36,4 +39,4 @@ sequelize.sync().then(() => {
 process.on('unhandledRejection', (err) => {
   logger.error('Erro não tratado:', err);
   process.exit(1);
-}); 
+});

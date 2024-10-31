@@ -20,7 +20,7 @@ class BackupService {
     await fs.mkdir(backupPath, { recursive: true });
 
     // Executar backup
-    await execAsync(`tar -czf ${path.join(backupPath, backupName)} -C /path/to/server/${server.id} .`);
+    await execAsync(`tar -czf ${path.join(backupPath, backupName)} -C /servers/${server.id} .`);
 
     return {
       path: path.join(backupPath, backupName),
@@ -58,7 +58,7 @@ class BackupService {
     await ServerService.powerAction(serverId, server.userId, 'stop');
 
     // Restaurar backup
-    await execAsync(`tar -xzf ${backupPath} -C /path/to/server/${server.id}`);
+    await execAsync(`tar -xzf ${backupPath} -C /servers/${server.id}`);
 
     // Reiniciar servidor
     await ServerService.powerAction(serverId, server.userId, 'start');

@@ -2,6 +2,7 @@ const User = require('./User');
 const Server = require('./Server');
 const Node = require('./Node');
 const Plan = require('./Plan');
+const Trigger = require('./Trigger');
 
 // Relacionamentos de Server
 Server.belongsTo(User, { as: 'owner' });
@@ -19,9 +20,14 @@ User.belongsToMany(Plan, { through: 'UserPlans' });
 Plan.belongsToMany(User, { through: 'UserPlans' });
 Plan.hasMany(Server);
 
+// Relacionamentos de Trigger
+Trigger.belongsTo(Server);
+Server.hasMany(Trigger);
+
 module.exports = {
   User,
   Server,
   Node,
-  Plan
+  Plan,
+  Trigger
 }; 

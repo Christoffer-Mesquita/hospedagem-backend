@@ -56,6 +56,17 @@ class AuthController {
       }
     });
   });
+
+  static forgotPassword = catchAsync(async (req, res) => {
+    const result = await AuthService.requestPasswordReset(req.body.email);
+    res.json(result);
+  });
+
+  static resetPassword = catchAsync(async (req, res) => {
+    const { token, newPassword } = req.body;
+    const result = await AuthService.resetPassword(token, newPassword);
+    res.json(result);
+  });
 }
 
 module.exports = AuthController; 
