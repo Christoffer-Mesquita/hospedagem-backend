@@ -14,6 +14,34 @@ const SmartBackupService = require('./src/services/SmartBackupService');
 
 const app = express();
 
+// Verifica se as variaveis do .env foram definidas corretamente
+
+if (!process.env.DB_HOST) {
+    console.error('DB_HOST não está definido.');
+} else if (!process.env.DB_USER) {
+    console.error('DB_USER não está definido.');
+} else if (!process.env.DB_PASS) {
+    console.error('DB_PASS não está definido.');
+} else if (!process.env.DB_NAME) {
+    console.error('DB_NAME não está definido.');
+} else if (!process.env.JWT_SECRET) {
+    console.error('JWT_SECRET não está definido.');
+} else if (!process.env.PORT) {
+    console.error('PORT não está definido.');
+} else if (!process.env.EMAIL_HOST) {
+    console.error('EMAIL_HOST não está definido.');
+} else if (!process.env.EMAIL_PORT) {
+    console.error('EMAIL_PORT não está definido.');
+} else if (!process.env.EMAIL_USER) {
+    console.error('EMAIL_USER não está definido.');
+} else if (!process.env.EMAIL_PASS) {
+    console.error('EMAIL_PASS não está definido.');
+} else if (!process.env.EMAIL_FROM) {
+    console.error('EMAIL_FROM não está definido.');
+} else if (!process.env.EMAIL_SECURE) {
+    console.error('EMAIL_SECURE não está definido.');
+};
+
 // Middlewares
 app.use(helmet());
 app.use(cors());
@@ -27,7 +55,7 @@ app.use('/api', routes);
 app.use(errorHandler);
 
 // Inicialização do servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
