@@ -9,6 +9,8 @@ const routes = require('./src/routes');
 const errorHandler = require('./src/middlewares/error.middleware');
 const logger = require('./src/config/logger');
 const AutomationService = require('./src/services/AutomationService');
+const FirewallService = require('./src/services/FirewallService');
+const SmartBackupService = require('./src/services/SmartBackupService');
 
 const app = express();
 
@@ -30,8 +32,19 @@ const PORT = process.env.PORT || 3000;
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
     logger.info(`Servidor rodando na porta ${PORT}`);
-    // Iniciar monitoramento de triggers após o servidor estar rodando
-    AutomationService.startTriggerMonitoring();
+    
+    // Iniciar serviços com verificação
+    if (typeof AutomationService.startTriggerMonitoring === 'function') {
+      AutomationService.startTriggerMonitoring();
+    }
+    
+    if (typeof FirewallService.startMonitoring === 'function') {
+      FirewallService.startMonitoring();
+    }
+    
+    if (typeof SmartBackupService.startScheduler === 'function') {
+      SmartBackupService.startScheduler();
+    }
   });
 });
 

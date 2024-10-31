@@ -38,6 +38,12 @@ DB_PASS=sua_senha
 DB_NAME=nome_do_banco
 JWT_SECRET=seu_segredo_jwt
 PORT=4000
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=email@gmail.com
+EMAIL_PASS=sua_senha_de_app_aqui
+EMAIL_FROM='"Sistema de Hospedagem" <email@gmail.com>'
+EMAIL_SECURE=false
 ```
 
 4. Inicie o servidor
