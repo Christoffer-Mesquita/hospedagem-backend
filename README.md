@@ -22,7 +22,7 @@ Sistema de gerenciamento de hospedagem virtual para servidores de jogos, bots e 
 1. Clone o repositório
 ```bash
 git clone https://github.com/christoffer-mesquita/hospedagem-backend.git
-cd sistema-hospedagem
+cd hospedagem-backend
 ```
 
 2. Instale as dependências
