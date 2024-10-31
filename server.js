@@ -53,7 +53,7 @@ app.use('/api', routes);
 app.use(errorHandler);
 
 // Inicialização do servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
