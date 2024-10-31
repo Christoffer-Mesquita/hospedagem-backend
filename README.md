@@ -193,6 +193,89 @@ Response (200):
 ]
 ```
 
+### 💾 Backup e Restauração
+
+#### Criar Backup
+```http
+POST /servers/{id}/backup
+Authorization: Bearer {token}
+
+Response (200):
+{
+    "path": "string",
+    "timestamp": "date",
+    "size": "number"
+}
+```
+
+#### Listar Backups
+```http
+GET /servers/{id}/backups
+Authorization: Bearer {token}
+
+Response (200):
+[
+    {
+        "name": "string",
+        "size": "number",
+        "created": "date"
+    }
+]
+```
+
+#### Restaurar Backup
+```http
+POST /servers/{id}/backup/restore
+Authorization: Bearer {token}
+
+Request:
+{
+    "backupName": "string"
+}
+
+Response (200):
+{
+    "message": "Backup restaurado com sucesso"
+}
+```
+
+### 📊 Métricas
+
+#### Métricas do Servidor
+```http
+GET /servers/{id}/metrics
+Authorization: Bearer {token}
+
+Response (200):
+{
+    "cpu": "number",
+    "memory": "string",
+    "uptime": "string",
+    "network": {
+        "rx_bytes": "number",
+        "tx_bytes": "number"
+    },
+    "disk": {
+        "used": "number",
+        "available": "number"
+    }
+}
+```
+
+#### Métricas do Node
+```http
+GET /admin/nodes/{id}/metrics
+Authorization: Bearer {admin_token}
+
+Response (200):
+{
+    "cpu_idle": "number",
+    "memory_free": "number",
+    "io_bi": "number",
+    "io_bo": "number"
+}
+```
+
 ## 🔒 Códigos de Erro
 
 - `400` Bad Request - Dados inválidos ou faltando
