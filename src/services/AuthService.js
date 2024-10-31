@@ -3,40 +3,45 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const ApiError = require('../utils/ApiError');
 const EmailService = require('./EmailService');
+const TokenService = require('./TokenService');
 const { Op } = require('sequelize');
 
 class AuthService {
-  static async registro(userData) {
-    const existingUser = await UserRepository.findByEmail(userData.email);
+  static async registro(nome, email, senha) {
+    // Verificar se usuário já existe
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       throw new ApiError(400, 'Email já cadastrado');
     }
 
+    // Criar hash da senha
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(userData.senha, salt);
+    const hashedPassword = await bcrypt.hash(senha, salt);
 
-    const user = await UserRepository.create({
-      ...userData,
+    // Criar usuário
+    const user = await User.create({
+      nome,
+      email,
       senha: hashedPassword
     });
 
-    const token = await TokenService.generateToken(user.id);
-    return { user, token };
+    return user;
   }
 
   static async login(email, senha) {
-    const user = await UserRepository.findByEmail(email);
+    // Buscar usuário
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       throw new ApiError(401, 'Credenciais inválidas');
     }
 
+    // Verificar senha
     const isPasswordMatch = await bcrypt.compare(senha, user.senha);
     if (!isPasswordMatch) {
       throw new ApiError(401, 'Credenciais inválidas');
     }
 
-    const token = await TokenService.generateToken(user.id);
-    return { user, token };
+    return user;
   }
 
   static async requestPasswordReset(email) {
