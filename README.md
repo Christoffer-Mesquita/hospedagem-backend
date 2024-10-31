@@ -21,7 +21,7 @@ Sistema de gerenciamento de hospedagem virtual para servidores de jogos, bots e 
 
 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/sistema-hospedagem.git
+git clone https://github.com/christoffer-mesquita/sistema-hospedagem.git
 cd sistema-hospedagem
 ```
 
